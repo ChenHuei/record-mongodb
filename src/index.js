@@ -7,12 +7,14 @@ const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
 
 const userRoutes = require("./routes/user");
+const trackRoutes = require("./routes/track");
 
 const app = express();
 const PORT = process.env.PORT || 3000;
 
 app.use(bodyParser.json());
 app.use(userRoutes);
+app.use(trackRoutes);
 
 app.get("/", (req, res) => {
   res.send("Hi there !!");
