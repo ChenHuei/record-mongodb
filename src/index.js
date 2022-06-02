@@ -9,6 +9,7 @@ const authRoutes = require("./routes/auth");
 const authMiddleware = require("./middlewares/auth");
 
 const app = express();
+const PORT = process.env.PORT || 3000;
 
 app.use(bodyParser.json());
 app.use(authRoutes);
@@ -17,7 +18,7 @@ app.get("/", authMiddleware, (req, res) => {
   res.send(`Hi there !! ${req.user.email}`);
 });
 
-app.listen(process.env.PORT || 3000, () => {
+app.listen(PORT, () => {
   console.log(`Server is listening on port ${PORT}`);
 });
 
