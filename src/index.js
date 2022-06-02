@@ -1,21 +1,21 @@
 require("dotenv").config();
 require("./models/user");
+require("./models/track");
 
 const express = require("express");
 const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
 
-const authRoutes = require("./routes/auth");
-const authMiddleware = require("./middlewares/auth");
+const userRoutes = require("./routes/user");
 
 const app = express();
 const PORT = process.env.PORT || 3000;
 
 app.use(bodyParser.json());
-app.use(authRoutes);
+app.use(userRoutes);
 
-app.get("/", authMiddleware, (req, res) => {
-  res.send(`Hi there !! ${req.user.email}`);
+app.get("/", (req, res) => {
+  res.send("Hi there !!");
 });
 
 app.listen(PORT, () => {
