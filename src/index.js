@@ -4,14 +4,22 @@ require("./models/user");
 const express = require("express");
 const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
+
 const authRoutes = require("./routes/auth");
+const authMiddleware = require("./middlewares/auth");
 
 const app = express();
 
 app.use(bodyParser.json());
 app.use(authRoutes);
 
-const PORT = process.env.PORT || 3000;
+app.get("/", authMiddleware, (req, res) => {
+  res.send(`Hi there !! ${req.user.email}`);
+});
+
+app.listen(process.env.PORT || 3000, () => {
+  console.log(`Server is listening on port ${PORT}`);
+});
 
 mongoose.connect(process.env.MONGO_URL);
 
@@ -21,12 +29,4 @@ mongoose.connection.on("connected", () => {
 
 mongoose.connection.on("error", (error) => {
   console.log("Error connected to mongo", error);
-});
-
-app.get("/", (req, res) => {
-  res.send("Hi there !!");
-});
-
-app.listen(PORT, () => {
-  console.log(`Server is listening on port ${PORT}`);
 });
